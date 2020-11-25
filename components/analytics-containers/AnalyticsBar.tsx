@@ -3,6 +3,7 @@ import QuerySpeed from '../graphs/QuerySpeed.tsx';
 import QuerySuccessFailure from '../graphs/QuerySuccessFailure.tsx';
 import DataSize from '../graphs/DataSize.tsx';
 import '../../style/tabs.css';
+import QuerySnapshot from '../graphs/QuerySnapshot.tsx'
 
 interface Props {
   viewIndex: number;
@@ -18,7 +19,8 @@ const AnalyticsBar = (props: Props) => {
       <div className="container-analytics">
         {viewIndex === 0 && <QuerySpeed queryData={queryData} />}
         {viewIndex === 1 && <QuerySuccessFailure queryData={queryData} />}
-        {viewIndex === 2 && <DataSize queryData={queryData} />}
+        {viewIndex === 2 && <QuerySnapshot queryData={queryData} />}
+        {/* {viewIndex === 2 && <DataSize queryData={queryData} />} */}
       </div>
       <button
         id="increment"
