@@ -1,33 +1,41 @@
 import React from 'https://esm.sh/react';
 import { Bar } from 'https://cdn.skypack.dev/react-chartjs-2';
-import '../../style/graphs.css';
-import aggregateMetrics from '../../functions/aggregateMetrics.ts'
+import '../../../style/graphs.css';
 
-interface Props {
-	queryData: [];
+interface Result {
+  apis: {};
+  latencyAvg: string;
+  latencyMax: string;
+  sizeAvg: string;
+  sizeMax: string;
+  queryTotal: any;
+  queryFrequency: number;
+  errorFrequency: number;
 }
 
-const DataSize = (props: Props) => {
-	const { queryData } = props;
+interface Props {
+	snapshotArray: [object] | null;
+	aggregateMetrics: Result | null;
+}
 
-	const result = aggregateMetrics(queryData)
-	console.log("maxSize:", result.sizeMax, "Avg Size:", result.sizeAvg)
+const DataSizeGraph = (props: Props) => {
+	const { snapshotArray, aggregateMetrics } = props;
 
 	const data = {
-		labels: queryData.map((obj, index) => {
+		labels: snapshotArray ? snapshotArray.map((obj, index) => {
 			const key = `Query ${index}`;
 			return key;
-		}),
+		}): [],
 		datasets: [
 			{
-				label: 'Query Speed',
+				label: 'Data Size',
 				backgroundColor: 'rgb(63, 191, 127)',
 				borderWidth: 1,
 				hoverBackgroundColor: 'rgb(51, 157, 104)',
-				data: queryData.map((obj: any) => {
+				data: snapshotArray ? snapshotArray.map((obj: any) => {
 					const value = obj.dataSize;
 					return value;
-				})
+				}) : [],
 			}
 		]
 	};
@@ -37,7 +45,7 @@ const DataSize = (props: Props) => {
 		maintainAspectRatio: false,
 		title: {
 			display: true,
-			text: 'Size of Returned Data in Bytes'
+			text: `Average Size: ${aggregateMetrics ? aggregateMetrics.sizeAvg : 0} bytes           Maximum Size: ${aggregateMetrics ? aggregateMetrics.sizeMax : 0} bytes`
 		},
 		onClick: function(e, item) {
 			console.log(item);
@@ -46,21 +54,16 @@ const DataSize = (props: Props) => {
 
 	const legend = {
 		display: false,
-		// boxWidth: 40,
 		labels: {
 			fontColor: 'rgb(255, 99, 132)'
-
 		},
-		MaxSize: result.sizeMax,
-		AvgSize: result.sizeAvg,
 	};
 
 	return (
-		<div className="query-speed-container">
+		<div className="graph">
 			<Bar data={data} options={options} legend={legend} aria-label="display-graph-query-speeds" role="img" />
-
 		</div>
 	);
 };
 
-export default DataSize;
+export default DataSizeGraph;
