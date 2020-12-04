@@ -1,9 +1,4 @@
-import {
-  Application,
-  Router,
-  RouterContext,
-  send,
-} from "https://deno.land/x/oak@v6.2.0/mod.ts";
+import {Application, Router, RouterContext, send,} from "https://deno.land/x/oak@v6.2.0/mod.ts";
 import artemisQuery from "./functions/artemis.ts";
 import syncCacheAndState from "./functions/sync.ts";
 import addDataSnapshot from "./functions/snapshot.ts";
@@ -12,7 +7,7 @@ import { createSecAccept } from "https://deno.land/std@0.69.0/ws/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 
-import {applyArtemis} from "./applyArtemis.ts"
+import {applyArtemis} from "./dist/applyArtemis.ts"
 
 
 const app = new Application();
@@ -67,23 +62,23 @@ app.use(oakCors())
 // //       });
 // // })
 
-// router.get("/artemis", (ctx) => {
-  // ctx.response.body = "Query has been sent";
-  // console.log("you have entered the router");
-  // let counter = 3;
-  // while (counter > 0) {
-  //   const url = "https://api.spacex.land/graphql";
-  //   let id = 10;
-  //   const query = ` query {
-  //     launch(id: "${id}") {
-  //       mission_name
-  //       launch_success
-  //       upcoming
-  //       launch_year
-  //       }
-  //     }`;
-  //   counter--;
-  //   id++;
+// router.get("/artemisQuery", (ctx) => {
+//   ctx.response.body = "Query has been sent";
+//   console.log("you have entered the router");
+//   let counter = 3;
+//   while (counter > 0) {
+//     const url = "https://api.spacex.land/graphql";
+//     let id = 10;
+//     const query = ` query {
+//       launch(id: "${id}") {
+//         mission_name
+//         launch_success
+//         upcoming
+//         launch_year
+//         }
+//       }`;
+//     counter--;
+//     id++;
 
 //     artemisQuery(url, query, ctx.state);
 //     ctx.response.body = ctx.state
@@ -98,12 +93,12 @@ app.use(oakCors())
 
 // app.use(router.routes(), router.allowedMethods());
 
-// app.use(
-//   oakCors({
-//     origin:  "http://localhost:8080",
-//     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-//   }),
-// );
+app.use(
+  oakCors({
+    origin:  "http://localhost:8080",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }),
+);
 
 const ArtemisService = await applyArtemis <Router>({
   Router,
@@ -121,9 +116,8 @@ console.log('testing artemis route server')
 //   next()
 // });
 
-
-
 const port = 4015;
 console.log(`Server started on port ${port}`);
 await app.listen({ port });
 
+//THIS THE OLD ONE
