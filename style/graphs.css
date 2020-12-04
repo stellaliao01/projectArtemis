@@ -9,3 +9,15 @@ GRAPHS ONLY
   width: 72.5vw;
   padding: 15px;
 }
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+table tr th {
+  text-align: left;
+  background: rgb(127, 90, 240);
+  color: white;
+  border-color: yellow;
+  font-family: sans-serif;
+}
