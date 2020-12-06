@@ -4,6 +4,7 @@ import QuerySuccessFailureGraph from './QuerySuccessFailureGraph.tsx';
 import DataSizeGraph from './DataSizeGraph.tsx';
 import QueryPerAPIGraph from './QueryPerAPIGraph.tsx'
 import '../../../style/graphs.css';
+import QuerySnapshot from './QuerySnapshot.tsx'
 
 interface Props {
   viewIndex: number;
@@ -24,6 +25,7 @@ const GraphContainer = (props: Props) => {
         {viewIndex === 2 && <DataSizeGraph snapshotArray={snapshotArray}
         aggregateMetrics={aggregateMetrics} />}
         {viewIndex === 3 && <QueryPerAPIGraph aggregateMetrics={aggregateMetrics} />}
+        {viewIndex === 4 && <QuerySnapshot snapshotArray={snapshotArray} />}
       </div>
       <button
         id="increment"
