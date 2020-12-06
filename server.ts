@@ -13,29 +13,29 @@ const app = new Application();
 const router = new Router();
 app.use(oakCors())
 
-// router.get("/artemis", (ctx) => {
-//   ctx.response.body = "Query has been sent";
-//   console.log("you have entered the router");
-//   let counter = 3;
-//   while (counter > 0) {
-//     const url = "https://api.spacex.land/graphql";
-//     let id = 10;
-//     const query = ` query {
-//       launch(id: "${id}") {
-//         mission_name
-//         launch_success
-//         ffdso
-//         upcoming
-//         launch_year
-//         }
-//       }`;
-//     counter--;
-//     id++;
+router.get("/artemis", (ctx) => {
+  ctx.response.body = "Query has been sent";
+  console.log("you have entered the router");
+  let counter = 3;
+  while (counter > 0) {
+    const url = "https://api.spacex.land/graphql";
+    let id = 10;
+    const query = ` query {
+      launch(id: "${id}") {
+        mission_name
+        launch_success
+        ffdso
+        upcoming
+        launch_year
+        }
+      }`;
+    counter--;
+    id++;
 
-//     artemisQuery(url, query, ctx.state);
-//     ctx.response.body = ctx.state
-//   }
-// });
+    artemisQuery(url, query, ctx.state);
+    ctx.response.body = ctx.state
+  }
+});
 
 
 // router.get("/getData", (ctx, state:any) => {
@@ -43,7 +43,7 @@ app.use(oakCors())
 //   ctx.response.body = state.artemis
 // })
 
-// app.use(router.routes(), router.allowedMethods());
+app.use(router.routes(), router.allowedMethods());
 
 app.use(
   oakCors({
@@ -54,22 +54,22 @@ app.use(
 
 
 
-// testing applyArtemisfunc
-const ArtemisService = await applyArtemis <Router>({
-  Router,
-  useGui: true
-})
-app.use(ArtemisService.routes());
-console.log('testing artemis route server')
+// // testing applyArtemisfunc
+// const ArtemisService = await applyArtemis <Router>({
+//   Router,
+//   useGui: true
+// })
+// app.use(ArtemisService.routes());
+// console.log('testing artemis route server')
 
-app.use(async (ctx, next) => {
-  // console.log(Deno.cwd());
-  await ctx.send({
-    root: `${Deno.cwd()}/dist`,
-    index: "index.html",
-  });
-  next();
-});
+// app.use(async (ctx, next) => {
+//   // console.log(Deno.cwd());
+//   await ctx.send({
+//     root: `${Deno.cwd()}/dist`,
+//     index: "index.html",
+//   });
+//   next();
+// });
 // import {exists} from 'https://deno.land/std@0.59.0/fs/exists.ts';
 
 // const staticFilePath = './dist'
@@ -88,7 +88,7 @@ app.use(async (ctx, next) => {
 
 // await ensureLocalFile(staticFilePath)
 
-const port = 4016;
+const port = 4017;
 console.log(`Server started on port ${port}`);
 await app.listen({ port });
 
